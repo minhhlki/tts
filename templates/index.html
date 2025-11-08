@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công cụ chuyển văn bản thành giọng nói</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ Công cụ chuyển văn bản thành giọng nói</h1>
+            <p class="subtitle">Hỗ trợ tiếng Việt và nhiều ngôn ngữ khác</p>
+        </header>
+
+        <main>
+            <div class="card">
+                <div class="form-group">
+                    <label for="textInput">Nhập văn bản:</label>
+                    <textarea
+                        id="textInput"
+                        placeholder="Nhập văn bản bạn muốn chuyển đổi thành giọng nói..."
+                        rows="8"
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="charCount">0</span> ký tự
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="languageSelect">Chọn ngôn ngữ:</label>
+                    <select id="languageSelect">
+                        <option value="vi" selected>🇻🇳 Tiếng Việt</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="ja">🇯🇵 日本語 (Japanese)</option>
+                        <option value="ko">🇰🇷 한국어 (Korean)</option>
+                        <option value="zh-CN">🇨🇳 中文 (Chinese)</option>
+                        <option value="fr">🇫🇷 Français (French)</option>
+                        <option value="de">🇩🇪 Deutsch (German)</option>
+                        <option value="es">🇪🇸 Español (Spanish)</option>
+                        <option value="it">🇮🇹 Italiano (Italian)</option>
+                        <option value="ru">🇷🇺 Русский (Russian)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="slowSpeed">
+                        Tốc độ chậm (dễ nghe hơn)
+                    </label>
+                </div>
+
+                <div class="button-group">
+                    <button id="convertBtn" class="btn btn-primary">
+                        <span class="btn-text">🔊 Chuyển đổi</span>
+                        <span class="loader" style="display: none;"></span>
+                    </button>
+                    <button id="clearBtn" class="btn btn-secondary">
+                        🗑️ Xóa
+                    </button>
+                </div>
+
+                <div id="resultSection" class="result-section" style="display: none;">
+                    <h3>Kết quả:</h3>
+                    <div class="audio-player">
+                        <audio id="audioPlayer" controls></audio>
+                    </div>
+                    <button id="downloadBtn" class="btn btn-success">
+                        💾 Tải xuống
+                    </button>
+                </div>
+
+                <div id="errorSection" class="error-section" style="display: none;">
+                    <p id="errorMessage"></p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by Google Text-to-Speech | Made with ❤️</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
