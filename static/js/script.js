@@ -29,7 +29,7 @@ convertBtn.addEventListener('click', async () => {
 
     // Hide previous results and errors
     hideError();
-    resultSection.style.display = 'none';
+    hideResult();
 
     // Show loading state
     setLoading(true);
@@ -56,7 +56,7 @@ convertBtn.addEventListener('click', async () => {
             audioPlayer.src = `/api/play/${currentFilename}`;
 
             // Show result section
-            resultSection.style.display = 'block';
+            showResult();
 
             // Auto play
             audioPlayer.play().catch(err => {
@@ -77,7 +77,7 @@ convertBtn.addEventListener('click', async () => {
 clearBtn.addEventListener('click', () => {
     textInput.value = '';
     charCount.textContent = '0';
-    resultSection.style.display = 'none';
+    hideResult();
     hideError();
     currentFilename = null;
     audioPlayer.src = '';
@@ -92,27 +92,30 @@ downloadBtn.addEventListener('click', () => {
 
 // Helper functions
 function setLoading(loading) {
-    const btnText = convertBtn.querySelector('.btn-text');
-    const loader = convertBtn.querySelector('.loader');
-
     if (loading) {
         convertBtn.disabled = true;
-        btnText.style.display = 'none';
-        loader.style.display = 'block';
+        convertBtn.classList.add('loading');
     } else {
         convertBtn.disabled = false;
-        btnText.style.display = 'block';
-        loader.style.display = 'none';
+        convertBtn.classList.remove('loading');
     }
+}
+
+function showResult() {
+    resultSection.classList.add('show');
+}
+
+function hideResult() {
+    resultSection.classList.remove('show');
 }
 
 function showError(message) {
     errorMessage.textContent = message;
-    errorSection.style.display = 'block';
+    errorSection.classList.add('show');
 }
 
 function hideError() {
-    errorSection.style.display = 'none';
+    errorSection.classList.remove('show');
 }
 
 // Enter key to convert (with Ctrl/Cmd)
@@ -120,23 +123,4 @@ textInput.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
         convertBtn.click();
     }
-});
-
-// Load sample text on page load (optional)
-window.addEventListener('load', () => {
-    const sampleTexts = {
-        'vi': 'Xin chào! Đây là công cụ chuyển văn bản thành giọng nói.',
-        'en': 'Hello! This is a text-to-speech tool.',
-        'ja': 'こんにちは！これはテキスト読み上げツールです。',
-        'ko': '안녕하세요! 텍스트 음성 변환 도구입니다.',
-        'zh-CN': '你好！这是一个文本转语音工具。'
-    };
-
-    // Optional: Set sample text based on selected language
-    languageSelect.addEventListener('change', () => {
-        if (!textInput.value) {
-            textInput.value = sampleTexts[languageSelect.value] || '';
-            charCount.textContent = textInput.value.length;
-        }
-    });
 });
